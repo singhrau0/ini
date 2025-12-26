@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-const SectionVideo = ({ videoSrc, brightness = 1.0, className = '' }) => {
+const SectionVideo = ({ videoSrc, brightness = 0.5, className = '' }) => {
   const videoRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 

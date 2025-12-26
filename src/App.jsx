@@ -30,7 +30,7 @@ function App() {
       <section id="hero" className="relative min-h-screen" style={{ zIndex: 1 }}>
         <SectionVideo 
           videoSrc="/videos/hero-background.MP4" 
-          brightness={1.0}
+          brightness={0.5}
         />
         <main className="relative" style={{ zIndex: 10 }}>
           <HeroSection />
@@ -42,7 +42,7 @@ function App() {
       <section id="content-3" className="relative" style={{ zIndex: 1 }}>
         <SectionVideo 
           videoSrc="/videos/what-inikola-background.MP4" 
-          brightness={0.9}
+          brightness={0.5}
         />
         <main className="relative" style={{ zIndex: 10 }}>
           <Section3 />
@@ -53,7 +53,7 @@ function App() {
       <section id="content-4" className="relative" style={{ zIndex: 1 }}>
         <SectionVideo 
           videoSrc="/videos/why-inikola-background.MP4" 
-          brightness={0.9}
+          brightness={0.5}
         />
         <main className="relative" style={{ zIndex: 10 }}>
           <Section4 />
@@ -64,7 +64,7 @@ function App() {
       <section id="content-5" className="relative" style={{ zIndex: 1 }}>
         <SectionVideo 
           videoSrc="/videos/house.MP4" 
-          brightness={0.85}
+          brightness={0.5}
         />
         <main className="relative" style={{ zIndex: 10 }}>
           <Section5 />
@@ -74,8 +74,8 @@ function App() {
       {/* EXPERIENCE SECTION - MAXIMUM BRIGHTNESS */}
       <section id="content-experience" className="relative" style={{ zIndex: 1 }}>
         <SectionVideo 
-          videoSrc="/videos/house.MP4" 
-          brightness={0.8}
+          videoSrc="/videos/hero-background.MP4" 
+          brightness={0.5}
         />
         <main className="relative" style={{ zIndex: 10 }}>
           <ExperienceSection />
@@ -86,7 +86,7 @@ function App() {
       <section id="content-faq" className="relative" style={{ zIndex: 1 }}>
         <SectionVideo 
           videoSrc="/videos/house.MP4" 
-          brightness={0.85}
+          brightness={0.5}
         />
         <main className="relative" style={{ zIndex: 10 }}>
           <FAQSection />
@@ -97,7 +97,7 @@ function App() {
       <footer className="relative" style={{ zIndex: 1 }}>
         <SectionVideo 
           videoSrc="/videos/footer.MP4" 
-          brightness={0.7}
+          brightness={0.5}
         />
         <div className="relative" style={{ zIndex: 10 }}>
           <Footer />

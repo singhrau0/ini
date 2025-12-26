@@ -42,7 +42,7 @@ const ProductsPage = () => {
       <div className="fixed top-0 left-0 w-full h-full" style={{ zIndex: 0 }}>
         <SectionVideo 
           videoSrc="/videos/house.MP4" 
-          brightness={0.9}
+          brightness={0.4}
         />
       </div>
       

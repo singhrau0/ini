@@ -5,26 +5,24 @@ const Section4 = () => {
       title: 'AI-first automation architecture',
       description: [
         'Built on neural network foundations that enable genuine learning, not simple rule-based triggers',
-        'Distributed intelligence processes decisions locally for speed while leveraging cloud for advanced analytics',
         'Architecture designed to scale from single rooms to enterprise campuses without performance degradation'
       ]
     },
-    {
-      id: 2,
-      title: 'Secure & scalable IoT infrastructure',
-      description: [
-        'Military-grade encryption protects all device communications and user data',
-        'Modular system architecture supports thousands of connected endpoints without bottlenecks',
-        'Zero-trust security model with continuous authentication and anomaly detection'
-      ]
-    },
+    // {
+    //   id: 2,
+    //   title: 'Secure & scalable IoT infrastructure',
+    //   description: [
+    //     'Military-grade encryption protects all device communications and user data',
+    //     'Modular system architecture supports thousands of connected endpoints without bottlenecks',
+    //     'Zero-trust security model with continuous authentication and anomaly detection'
+    //   ]
+    // },
     {
       id: 3,
       title: 'Designed for homes, builders & enterprises',
       description: [
         'Flexible deployment models accommodate single residences, multi-unit developments, and commercial properties',
-        'Builder-friendly installation framework reduces commissioning time and complexity',
-        'White-label capabilities enable integration partners to customize branding and workflows'
+        'Builder-friendly installation framework reduces commissioning time and complexity'
       ]
     },
     {
@@ -32,8 +30,7 @@ const Section4 = () => {
       title: 'Energy-efficient and future-ready',
       description: [
         'Advanced power management reduces energy consumption up to 40% compared to conventional systems',
-        'Software-defined architecture enables feature updates and protocol support via OTA upgrades',
-        'Compatible with emerging standards including Matter, Thread, and next-generation IoT protocols'
+        'Software-defined architecture enables feature updates and protocol support via OTA upgrades'
       ]
     },
     {
@@ -41,8 +38,7 @@ const Section4 = () => {
       title: 'Built for Indian and global markets',
       description: [
         'Engineered to operate reliably under diverse power conditions and extreme temperature ranges',
-        'Multi-language support and localized automation patterns for regional requirements',
-        'Hybrid cloud-local architecture ensures functionality during internet disruptions'
+        'Multi-language support and localized automation patterns for regional requirements'
       ]
     }
   ];
