@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-geist: 'Geist', system-ui, sans-serif;
+  --font-geist-mono: 'Geist Mono', monospace;
+  --font-mona: 'Mona Sans', system-ui, sans-serif;
+  --font-ibm-plex: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-manrope: 'Manrope', system-ui, sans-serif;
+}
+
+html {
+  font-family: var(--font-sans);
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smoother edges for all elements */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Smooth robot rendering */
+.robot-container,
+.robot-container iframe,
+.robot-container canvas {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* Typography classes */
+.hero-heading {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  font-weight: 300;
+  font-size: 72px;
+  letter-spacing: -2px;
+  line-height: 1.1;
+}
+
+.section-heading {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  font-weight: 400;
+  font-size: 42px;
+  letter-spacing: -1px;
+}
+
+.body-text {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #B8B8B8;
+}
+
+/* Smoother borders and shadows */
+.rounded,
+.rounded-lg,
+.rounded-xl,
+.rounded-2xl,
+.rounded-3xl {
+  image-rendering: auto;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Better spacing for sections */
+.content-section {
+  position: relative;
+  z-index: 10;
+}
+
+/* Responsive typography */
+@media (max-width: 768px) {
+  .hero-heading {
+    font-size: 48px;
+    letter-spacing: -1.5px;
+  }
+  
+  .section-heading {
+    font-size: 32px;
+    letter-spacing: -0.5px;
+  }
+  
+  .body-text {
+    font-size: 16px;
+  }
+}
+
+/* Smooth scroll */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Spotlight animation */
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: translate(-72%, -62%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
+}
+
+.animate-spotlight {
+  animation: spotlight 2s ease 0.75s 1 forwards;
+}
+
+/* Spinner animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
