@@ -47,28 +47,31 @@ const ExperienceSection = () => {
             <div>
               <p className="text-white/50 text-sm mb-2">Email</p>
               <a 
-                href="mailto:contact@inikola.com" 
+                href="mailto:contact@craftingbrain.com" 
                 className="text-white hover:text-inikola-purple transition-colors text-base"
               >
-                contact@inikola.com
+                contact@craftingbrain.com
               </a>
             </div>
             
             <div>
               <p className="text-white/50 text-sm mb-2">Phone</p>
               <a 
-                href="tel:+919876543210" 
+                href="tel:+919115076096" 
                 className="text-white hover:text-inikola-purple transition-colors text-base"
               >
-                +91 98765 43210
+                +91 91150 76096
               </a>
             </div>
             
             <div>
               <p className="text-white/50 text-sm mb-2">Address</p>
               <p className="text-white/70 text-base">
-                Hyderabad, Telangana<br />
-                India
+                3rd Floor <br />
+                Bharat Bazaar Town House <br />
+                Tapovan Park, Manikonda <br />
+                Hyderabad, Telangana <br />
+                500089
               </p>
             </div>
           </div>

@@ -8,15 +8,6 @@ const Section4 = () => {
         'Architecture designed to scale from single rooms to enterprise campuses without performance degradation'
       ]
     },
-    // {
-    //   id: 2,
-    //   title: 'Secure & scalable IoT infrastructure',
-    //   description: [
-    //     'Military-grade encryption protects all device communications and user data',
-    //     'Modular system architecture supports thousands of connected endpoints without bottlenecks',
-    //     'Zero-trust security model with continuous authentication and anomaly detection'
-    //   ]
-    // },
     {
       id: 3,
       title: 'Designed for homes, builders & enterprises',
@@ -44,10 +35,10 @@ const Section4 = () => {
   ];
 
   return (
-    <section id="content-4" className="py-20 px-6 md:px-10 relative z-10">
+    <section id="content-4" className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-10 relative z-10">
       <div className="max-w-4xl mx-auto">
         <h2 
-          className="text-5xl mb-20 text-center text-white"
+          className="text-3xl sm:text-4xl md:text-5xl mb-12 sm:mb-16 md:mb-20 text-center text-white"
           style={{
             fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
             fontWeight: 300,
@@ -58,11 +49,11 @@ const Section4 = () => {
         </h2>
 
         {/* Simple list - just scroll normally */}
-        <div className="space-y-16">
+        <div className="space-y-12 sm:space-y-16">
           {content.map((item) => (
-            <div key={item.id} className="pb-8 border-b border-white/10">
+            <div key={item.id} className="pb-6 sm:pb-8 border-b border-white/10">
               <h3 
-                className="text-3xl md:text-4xl mb-6 text-white"
+                className="text-2xl sm:text-3xl md:text-4xl mb-4 sm:mb-6 text-white"
                 style={{
                   fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
                   fontWeight: 300,
@@ -72,14 +63,18 @@ const Section4 = () => {
                 {item.title}
               </h3>
 
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {item.description.map((line, idx) => (
                   <p
                     key={idx}
-                    className="text-white/80 text-lg leading-relaxed"
+                    className="text-base sm:text-lg leading-relaxed"
                     style={{
                       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
-                      fontWeight: 300
+                      fontWeight: 300,
+                      background: 'linear-gradient(135deg, #e8e8e8 0%, #d0d0f0 50%, #c8c8ff 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text'
                     }}
                   >
                     {line}

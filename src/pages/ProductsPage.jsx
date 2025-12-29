@@ -62,10 +62,9 @@ const ProductsPage = () => {
 
         <nav className="hidden md:flex items-center gap-8 text-sm text-white/80">
           <Link to="/" className="hover:text-white transition-colors">Home</Link>
-          <a href="/#content-3" className="hover:text-white transition-colors">Solutions</a>
           <Link to="/products" className="text-white">Products</Link>
           <Link to="/careers" className="hover:text-white transition-colors">Careers</Link>
-          <a href="/#content-experience" className="hover:text-white transition-colors">Contact</a>
+          <Link to="/contact" className="hover:text-white transition-colors">Contact</Link> 
         </nav>
 
         <Link 
