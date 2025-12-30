@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import ComingSoonAnimation from '../components/ComingSoonAnimation';
 import SectionVideo from '../components/SectionVideo';
+import { useSmoothScroll } from '../hooks/useSmoothScroll';
 
 const ProductsPage = () => {
+  useSmoothScroll();
   const products = [
     {
       id: 'evalsea',
@@ -62,6 +64,7 @@ const ProductsPage = () => {
 
         <nav className="hidden md:flex items-center gap-8 text-sm text-white/80">
           <Link to="/" className="hover:text-white transition-colors">Home</Link>
+          <Link to="/about" className="hover:text-white transition-colors">About</Link>
           <Link to="/products" className="text-white">Products</Link>
           <Link to="/careers" className="hover:text-white transition-colors">Careers</Link>
           <Link to="/contact" className="hover:text-white transition-colors">Contact</Link> 

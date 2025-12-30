@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import SectionVideo from '../components/SectionVideo';
+import { useSmoothScroll } from '../hooks/useSmoothScroll';
 
 const CareersPage = () => {
   const [hoveredTeam, setHoveredTeam] = useState(null);
   const scrollRef = useRef(null);
   const [isAutoScrolling, setIsAutoScrolling] = useState(true);
+  useSmoothScroll();
 
   const coreTeam = [
     {
@@ -176,7 +178,7 @@ const CareersPage = () => {
         if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth - scrollContainer.clientWidth) {
           scrollContainer.scrollLeft = 0;
         } else {
-          scrollContainer.scrollLeft += 3; // 3x faster!
+          scrollContainer.scrollLeft += 2; // 3x faster!
         }
       }, 10); // 3x faster interval!
     };
@@ -195,7 +197,7 @@ const CareersPage = () => {
       <div className="fixed top-0 left-0 w-full h-full" style={{ zIndex: 0 }}>
         <SectionVideo 
           videoSrc="/videos/careers.MP4" 
-          brightness={0.5}
+          brightness={0.3}
         />
       </div>
       
@@ -215,6 +217,7 @@ const CareersPage = () => {
 
         <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-sm text-white/80">
           <Link to="/" className="hover:text-white transition-colors">Home</Link>
+          <Link to="/about" className="hover:text-white transition-colors">About</Link>
           <Link to="/products" className="hover:text-white transition-colors">Products</Link>
           <Link to="/careers" className="text-white">Careers</Link>
           <Link to="/contact" className="hover:text-white transition-colors">Contact</Link>
