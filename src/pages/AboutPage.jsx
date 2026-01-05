@@ -99,12 +99,12 @@ const AboutPage = () => {
         </nav>
 
         <Link
-          to="/contact"
+          to="/"
           className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/10 text-white text-xs sm:text-sm hover:bg-white/20 transition"
           style={{ fontWeight: 300 }}
         >
-          <span className="hidden sm:inline">Get Started</span>
-          <span className="sm:hidden">Start</span>
+          <span className="hidden sm:inline">Back To Home</span>
+          <span className="sm:hidden">Back To Home</span>
         </Link>
       </header>
 
