@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import ComingSoonAnimation from '../components/ComingSoonAnimation';
 import SectionVideo from '../components/SectionVideo';
 import { useSmoothScroll } from '../hooks/useSmoothScroll';
+import { VIDEOS } from '../config/videos';
 
 const ProductsPage = () => {
   useSmoothScroll();
@@ -42,10 +43,7 @@ const ProductsPage = () => {
     <div className="min-h-screen bg-black text-white font-sans">
       {/* VIDEO BACKGROUND - ULTRA BRIGHT */}
       <div className="fixed top-0 left-0 w-full h-full" style={{ zIndex: 0 }}>
-        <SectionVideo 
-          videoSrc="/videos/house.MP4" 
-          brightness={0.4}
-        />
+        <SectionVideo videoSrc={VIDEOS.house} brightness={0.5} />
       </div>
       
       {/* Header */}

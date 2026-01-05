@@ -47,20 +47,20 @@ const ExperienceSection = () => {
             <div>
               <p className="text-white/50 text-sm mb-2">Email</p>
               <a 
-                href="mailto:contact@craftingbrain.com" 
+                href="mailto:contact@inikola.com" 
                 className="text-white hover:text-inikola-purple transition-colors text-base"
               >
-                contact@craftingbrain.com
+                contact@inikola.com
               </a>
             </div>
             
             <div>
               <p className="text-white/50 text-sm mb-2">Phone</p>
               <a 
-                href="tel:+919115076096" 
+                href="tel:+919305009726" 
                 className="text-white hover:text-inikola-purple transition-colors text-base"
               >
-                +91 91150 76096
+                +91 93050 09726
               </a>
             </div>
             

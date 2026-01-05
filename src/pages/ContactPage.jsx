@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import SectionVideo from '../components/SectionVideo';
 import ContactSection from '../components/ContactSection';
 import { useSmoothScroll } from '../hooks/useSmoothScroll';
+import { VIDEOS } from '../config/videos';
 
 const ContactPage = () => {
   useSmoothScroll();
@@ -9,10 +10,7 @@ const ContactPage = () => {
     <div className="min-h-screen bg-black text-white font-sans">
       {/* VIDEO BACKGROUND - house.MP4 */}
       <div className="fixed top-0 left-0 w-full h-full" style={{ zIndex: 0 }}>
-        <SectionVideo 
-          videoSrc="/videos/house.MP4" 
-          brightness={0.6}
-        />
+        <SectionVideo videoSrc={VIDEOS.house} brightness={0.5} />
       </div>
       
       {/* Header */}

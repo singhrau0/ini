@@ -10,7 +10,7 @@ import FAQSection from './components/FAQSection';
 import Footer from './components/Footer';
 import { useSmoothScroll } from './hooks/useSmoothScroll';
 import { useScrollAnimations } from './hooks/useScrollAnimations';
-
+import { VIDEOS } from './config/videos';
 function App() {
   // Initialize smooth scrolling
   useSmoothScroll();
@@ -28,10 +28,7 @@ function App() {
 
       {/* HERO SECTION - MAXIMUM BRIGHTNESS */}
       <section id="hero" className="relative min-h-screen" style={{ zIndex: 1 }}>
-        <SectionVideo 
-          videoSrc="/videos/hero-background.MP4" 
-          brightness={0.5}
-        />
+        <SectionVideo videoSrc={VIDEOS.heroBackground} brightness={0.5} />
         <main className="relative" style={{ zIndex: 10 }}>
           <HeroSection />
           <div id="section-hero-end" className="h-[1px]"></div>
@@ -41,7 +38,7 @@ function App() {
       {/* SECTION 3 - MAXIMUM BRIGHTNESS */}
       <section id="content-3" className="relative" style={{ zIndex: 1 }}>
         <SectionVideo 
-          videoSrc="/videos/what-inikola-background.MP4" 
+          videoSrc={VIDEOS.whatInikola}  // ← Changed!
           brightness={0.5}
         />
         <main className="relative" style={{ zIndex: 10 }}>
@@ -52,7 +49,7 @@ function App() {
       {/* SECTION 4 - MAXIMUM BRIGHTNESS */}
       <section id="content-4" className="relative" style={{ zIndex: 1 }}>
         <SectionVideo 
-          videoSrc="/videos/why-inikola-background.MP4" 
+          videoSrc={VIDEOS.whyInikola}  // ← Changed!
           brightness={0.5}
         />
         <main className="relative" style={{ zIndex: 10 }}>
@@ -63,7 +60,7 @@ function App() {
       {/* SECTION 5 - MAXIMUM BRIGHTNESS */}
       <section id="content-5" className="relative" style={{ zIndex: 1 }}>
         <SectionVideo 
-          videoSrc="/videos/house.MP4" 
+          videoSrc={VIDEOS.house}  // ← Changed!
           brightness={0.5}
         />
         <main className="relative" style={{ zIndex: 10 }}>
@@ -74,7 +71,7 @@ function App() {
       {/* EXPERIENCE SECTION - MAXIMUM BRIGHTNESS */}
       <section id="content-experience" className="relative" style={{ zIndex: 1 }}>
         <SectionVideo 
-          videoSrc="/videos/hero-background.MP4" 
+          videoSrc={VIDEOS.heroBackground}  // ← Changed!
           brightness={0.5}
         />
         <main className="relative" style={{ zIndex: 10 }}>
@@ -85,7 +82,7 @@ function App() {
       {/* FAQ SECTION - MAXIMUM BRIGHTNESS */}
       <section id="content-faq" className="relative" style={{ zIndex: 1 }}>
         <SectionVideo 
-          videoSrc="/videos/house.MP4" 
+          videoSrc={VIDEOS.house}  // ← Changed!
           brightness={0.5}
         />
         <main className="relative" style={{ zIndex: 10 }}>
@@ -96,7 +93,7 @@ function App() {
       {/* FOOTER - MAXIMUM BRIGHTNESS */}
       <footer className="relative" style={{ zIndex: 1 }}>
         <SectionVideo 
-          videoSrc="/videos/footer.MP4" 
+          videoSrc={VIDEOS.footer}  // ← Changed!
           brightness={0.5}
         />
         <div className="relative" style={{ zIndex: 10 }}>

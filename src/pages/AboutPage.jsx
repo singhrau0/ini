@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import SectionVideo from '../components/SectionVideo';
 import { useSmoothScroll } from '../hooks/useSmoothScroll';
+import { VIDEOS } from '../config/videos';
 
 const AboutPage = () => {
   useSmoothScroll();
@@ -64,7 +65,7 @@ const AboutPage = () => {
     <div className="min-h-screen bg-black text-white font-sans">
       {/* VIDEO BACKGROUND */}
       <div className="fixed top-0 left-0 w-full h-full" style={{ zIndex: 0 }}>
-        <SectionVideo videoSrc="/videos/careers.MP4" brightness={0.4} />
+        <SectionVideo videoSrc={VIDEOS.careers} brightness={0.5} />
       </div>
 
       {/* Header */}
