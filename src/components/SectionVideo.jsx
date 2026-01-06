@@ -2,25 +2,52 @@ import { useEffect, useRef, useState } from 'react';
 
 const SectionVideo = ({ videoSrc, brightness = 0.5, className = '' }) => {
   const videoRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    console.log('🎬 Loading video:', videoSrc);
+    video.preload = 'auto';
+    video.muted = true;
+    video.playsInline = true;
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
 
-    // Intersection Observer to play/pause video based on visibility
+    const handleCanPlay = () => {
+      setIsLoaded(true);
+      video.play().catch(() => {
+        // Autoplay blocked, will retry on user interaction
+        const playOnInteraction = () => {
+          video.play().catch(() => {});
+          document.removeEventListener('click', playOnInteraction);
+          document.removeEventListener('scroll', playOnInteraction);
+        };
+        document.addEventListener('click', playOnInteraction, { once: true });
+        document.addEventListener('scroll', playOnInteraction, { once: true });
+      });
+    };
+
+    video.addEventListener('canplay', handleCanPlay);
+    video.load();
+
+    return () => {
+      video.removeEventListener('canplay', handleCanPlay);
+    };
+  }, [videoSrc]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    const container = containerRef.current;
+    if (!video || !container) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          setIsVisible(entry.isIntersecting);
-          
-          if (entry.isIntersecting) {
-            video.play().catch(err => {
-              console.log('Video autoplay prevented:', err);
-            });
-          } else {
+          if (entry.isIntersecting && isLoaded) {
+            video.play().catch(() => {});
+          } else if (!entry.isIntersecting) {
             video.pause();
           }
         });
@@ -28,19 +55,16 @@ const SectionVideo = ({ videoSrc, brightness = 0.5, className = '' }) => {
       { threshold: 0.1 }
     );
 
-    const section = video.closest('section') || video.closest('footer');
-    if (section) {
-      observer.observe(section);
-    }
-
-    return () => {
-      if (section) observer.unobserve(section);
-    };
-  }, [videoSrc]);
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [isLoaded]);
 
   return (
-    <div className={`absolute top-0 left-0 w-full h-full overflow-hidden ${className}`}
-         style={{ zIndex: 0 }}>
+    <div 
+      ref={containerRef}
+      className={`absolute top-0 left-0 w-full h-full overflow-hidden ${className}`}
+      style={{ zIndex: 0 }}
+    >
       <video
         ref={videoRef}
         loop
@@ -50,15 +74,17 @@ const SectionVideo = ({ videoSrc, brightness = 0.5, className = '' }) => {
         className="absolute top-0 left-0 w-full h-full object-cover"
         style={{
           filter: `brightness(${brightness}) contrast(1.2) saturate(1.1)`,
-          opacity: 1,
-          transform: 'translateZ(0)',
+          opacity: isLoaded ? 1 : 0,
+          transition: 'opacity 0.6s ease-in',
+          transform: 'translate3d(0, 0, 0)',
+          backfaceVisibility: 'hidden',
+          WebkitBackfaceVisibility: 'hidden',
           willChange: 'transform'
         }}
       >
         <source src={videoSrc} type="video/mp4" />
       </video>
-      
-      {/* VERY LIGHT gradient for text readability only */}
+
       <div 
         className="absolute inset-0 pointer-events-none"
         style={{
