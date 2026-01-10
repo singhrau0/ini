@@ -20,7 +20,8 @@ const ProductsPage = () => {
         'Dashboards & analytics'
       ],
       problemSolved: 'Automates evaluation workflows and generates structured reports. Eliminates manual grading processes and provides consistent, data-driven assessments.',
-      website: '#'
+      website: '#',
+      brochureLink: '/brochure/evalsea'
     },
     {
       id: 'posting-expert',
@@ -35,7 +36,8 @@ const ProductsPage = () => {
         'Multi-tenant scaling'
       ],
       problemSolved: 'Automates content creation, image generation, feedback, and publishing. Saves hours of manual social media management and ensures consistent posting schedules.',
-      website: '#'
+      website: '#',
+      brochureLink: '/brochure/posting-expert'
     }
   ];
 
@@ -144,16 +146,58 @@ const ProductsPage = () => {
                     {product.description}
                   </p>
                   
-                  <a 
-                    href={product.website}
-                    className="inline-block px-6 py-3 bg-white text-black rounded-full hover:bg-white/90 transition-colors"
-                    style={{
-                      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
-                      fontWeight: 500
-                    }}
-                  >
-                    Visit Product Website →
-                  </a>
+                  {/* Action Buttons */}
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Link 
+                      to={product.brochureLink}
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-colors"
+                      style={{
+                        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
+                        fontWeight: 500
+                      }}
+                    >
+                      <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        className="h-5 w-5" 
+                        fill="none" 
+                        viewBox="0 0 24 24" 
+                        stroke="currentColor"
+                      >
+                        <path 
+                          strokeLinecap="round" 
+                          strokeLinejoin="round" 
+                          strokeWidth={2} 
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" 
+                        />
+                      </svg>
+                      View Brochure
+                    </Link>
+                    
+                    <a 
+                      href={product.website}
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-black rounded-full hover:bg-white/90 transition-colors"
+                      style={{
+                        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
+                        fontWeight: 500
+                      }}
+                    >
+                      Visit Website
+                      <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        className="h-4 w-4" 
+                        fill="none" 
+                        viewBox="0 0 24 24" 
+                        stroke="currentColor"
+                      >
+                        <path 
+                          strokeLinecap="round" 
+                          strokeLinejoin="round" 
+                          strokeWidth={2} 
+                          d="M14 5l7 7m0 0l-7 7m7-7H3" 
+                        />
+                      </svg>
+                    </a>
+                  </div>
                 </div>
                 
                 {/* Right Column */}

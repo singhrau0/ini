@@ -6,6 +6,7 @@ import AboutPage from './pages/AboutPage.jsx';
 import ProductsPage from './pages/ProductsPage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
 import CareersPage from './pages/Careerspage.jsx';
+import BrochurePage from './pages/BrochurePage';
 import './styles/index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/careers" element={<CareersPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/brochure/:productId" element={<BrochurePage />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
