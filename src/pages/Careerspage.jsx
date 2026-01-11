@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import SectionVideo from '../components/SectionVideo';
 import { useSmoothScroll } from '../hooks/useSmoothScroll';
 import { VIDEOS } from '../config/videos';
@@ -7,7 +7,11 @@ import { VIDEOS } from '../config/videos';
 const CareersPage = () => {
   const [hoveredTeam, setHoveredTeam] = useState(null);
   const scrollRef = useRef(null);
+
+  // NOTE: We'll still keep your state, but we will control it more safely.
   const [isAutoScrolling, setIsAutoScrolling] = useState(true);
+
+  // Smooth scroll hook stays unchanged
   useSmoothScroll();
 
   const coreTeam = [
@@ -167,30 +171,104 @@ const CareersPage = () => {
     }
   ];
 
-  // FASTER Auto-scroll effect (3x speed)
-  useEffect(() => {
-    const scrollContainer = scrollRef.current;
-    if (!scrollContainer || !isAutoScrolling) return;
+  // ---- Carousel Helpers (NEW) ----
 
-    let scrollInterval;
-    
-    const startScrolling = () => {
-      scrollInterval = setInterval(() => {
-        if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth - scrollContainer.clientWidth) {
-          scrollContainer.scrollLeft = 0;
-        } else {
-          scrollContainer.scrollLeft += 2; // 3x faster!
-        }
-      }, 10); // 3x faster interval!
+  // Duplicate items to create seamless loop.
+  const loopedTeam = useMemo(() => [...coreTeam, ...coreTeam], [coreTeam]);
+
+  const rafIdRef = useRef(null);
+  const lastTsRef = useRef(0);
+
+  const isTouchDeviceRef = useRef(false);
+  const prefersReducedMotionRef = useRef(false);
+
+  useEffect(() => {
+    // Detect touch / coarse pointer (mobile/tablet)
+    isTouchDeviceRef.current =
+      typeof window !== 'undefined' &&
+      (window.matchMedia?.('(pointer: coarse)').matches ||
+        'ontouchstart' in window ||
+        navigator.maxTouchPoints > 0);
+
+    // Reduced motion
+    prefersReducedMotionRef.current =
+      typeof window !== 'undefined' &&
+      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
+    // On touch devices or reduced motion -> disable auto-scroll by default
+    if (isTouchDeviceRef.current || prefersReducedMotionRef.current) {
+      setIsAutoScrolling(false);
+    }
+  }, []);
+
+  // Seamless infinite auto-scroll using requestAnimationFrame
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    // Disable auto-scroll on touch devices or reduced motion
+    if (isTouchDeviceRef.current || prefersReducedMotionRef.current) return;
+
+    if (!isAutoScrolling) {
+      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = null;
+      lastTsRef.current = 0;
+      return;
+    }
+
+    const stepPxPerSecond = 140; // tuned for smoothness (adjust if needed)
+    const loopPoint = () => {
+      // Since we duplicated content, midpoint is the "end" of first set.
+      const half = el.scrollWidth / 2;
+
+      // If we moved past the midpoint, shift back by half (seamless)
+      if (el.scrollLeft >= half) {
+        el.scrollLeft -= half;
+      }
     };
 
-    startScrolling();
+    const tick = (ts) => {
+      if (!lastTsRef.current) lastTsRef.current = ts;
+      const dt = ts - lastTsRef.current;
+      lastTsRef.current = ts;
 
-    return () => clearInterval(scrollInterval);
+      // Move based on time delta
+      el.scrollLeft += (stepPxPerSecond * dt) / 1000;
+
+      loopPoint();
+
+      rafIdRef.current = requestAnimationFrame(tick);
+    };
+
+    rafIdRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = null;
+      lastTsRef.current = 0;
+    };
   }, [isAutoScrolling]);
 
-  const handleMouseEnter = () => setIsAutoScrolling(false);
-  const handleMouseLeave = () => setIsAutoScrolling(true);
+  const pauseAutoScroll = () => {
+    // Pause only if auto-scroll is actually enabled logic-wise
+    if (!isTouchDeviceRef.current && !prefersReducedMotionRef.current) {
+      setIsAutoScrolling(false);
+    }
+  };
+
+  const resumeAutoScroll = () => {
+    if (!isTouchDeviceRef.current && !prefersReducedMotionRef.current) {
+      setIsAutoScrolling(true);
+    }
+  };
+
+  // Pause while user drags/presses
+  const handlePointerDown = () => pauseAutoScroll();
+  const handlePointerUp = () => resumeAutoScroll();
+
+  // Your previous hover handlers mapped to the new pause/resume functions
+  const handleMouseEnter = () => pauseAutoScroll();
+  const handleMouseLeave = () => resumeAutoScroll();
 
   return (
     <div className="min-h-screen bg-black text-white font-sans">
@@ -198,14 +276,14 @@ const CareersPage = () => {
       <div className="fixed top-0 left-0 w-full h-full" style={{ zIndex: 0 }}>
         <SectionVideo videoSrc={VIDEOS.careers} brightness={0.5} />
       </div>
-      
+
       {/* Header - RESPONSIVE */}
       <header className="fixed top-0 left-0 right-0 flex items-center justify-between px-4 sm:px-6 md:px-4 sm:px-6 md:px-4 sm:px-6 md:px-10 py-3 sm:py-4 backdrop-blur-md bg-black/40 border-b border-white/10 text-white"
               style={{ zIndex: 100 }}>
         <Link to="/" className="flex items-center gap-2 sm:gap-3">
-          <img 
-            src="/logo.png" 
-            alt="INIKOLA Logo" 
+          <img
+            src="/logo.png"
+            alt="INIKOLA Logo"
             className="w-6 h-6 sm:w-8 sm:h-8 object-contain"
           />
           <span className="text-sm sm:text-base tracking-tight" style={{ fontWeight: 400 }}>
@@ -221,7 +299,7 @@ const CareersPage = () => {
           <Link to="/contact" className="hover:text-white transition-colors">Contact</Link>
         </nav>
 
-        <Link 
+        <Link
           to="/"
           className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/10 text-white text-xs sm:text-sm hover:bg-white/20 transition"
           style={{ fontWeight: 300 }}
@@ -235,7 +313,7 @@ const CareersPage = () => {
       <section className="relative pt-24 sm:pt-32 pb-12 sm:pb-20 px-4 sm:px-6 md:px-4 sm:px-6 md:px-4 sm:px-6 md:px-10" style={{ zIndex: 10 }}>
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-white/60 mb-3 sm:mb-4 text-xs sm:text-sm tracking-wider">JOIN THE TEAM</p>
-          <h1 
+          <h1
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 leading-tight"
             style={{
               fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
@@ -245,7 +323,7 @@ const CareersPage = () => {
           >
             Build the Future of<br />Intelligent Living
           </h1>
-          <p 
+          <p
             className="text-base sm:text-lg md:text-xl text-white/70 max-w-2xl mx-auto px-4"
             style={{
               fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
@@ -258,10 +336,10 @@ const CareersPage = () => {
         </div>
       </section>
 
-      {/* Core Team Section - FASTER AUTO-SCROLLING CAROUSEL + RESPONSIVE */}
+      {/* Core Team Section - Seamless Infinite Loop + Mobile Swipe */}
       <section className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-4 sm:px-6 md:px-4 sm:px-6 md:px-10" style={{ zIndex: 10 }}>
         <div className="max-w-7xl mx-auto">
-          <h2 
+          <h2
             className="text-2xl sm:text-3xl md:text-4xl mb-3 sm:mb-4 text-center"
             style={{
               fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
@@ -274,34 +352,39 @@ const CareersPage = () => {
           <p className="text-center text-sm sm:text-base text-white/60 mb-8 sm:mb-12 max-w-2xl mx-auto px-4">
             INIKOLA is built by a core team of engineers and innovators with deep expertise in home automation, AI, and intelligent systems.
           </p>
-          
+
           {/* Scrolling Container */}
-          <div 
+          <div
             ref={scrollRef}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            className="overflow-x-auto scrollbar-hide cursor-pointer"
+            onPointerDown={handlePointerDown}
+            onPointerUp={handlePointerUp}
+            className="overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing"
             style={{
-              scrollBehavior: 'smooth',
-              WebkitOverflowScrolling: 'touch'
+              scrollBehavior: 'auto', // auto while looping; snapping handles user motion
+              WebkitOverflowScrolling: 'touch',
+              scrollSnapType: 'x mandatory',
+              overscrollBehaviorX: 'contain'
             }}
           >
             <div className="flex gap-4 sm:gap-6 pb-4" style={{ width: 'max-content' }}>
-              {coreTeam.map((member) => (
-                <div 
-                  key={member.id}
+              {loopedTeam.map((member, idx) => (
+                <div
+                  key={`${member.id}-${idx}`} // unique due to duplication
                   className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8 hover:border-white/20 transition-all duration-500 hover:transform hover:-translate-y-2 flex-shrink-0"
                   style={{
                     width: '280px',
-                    transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
+                    transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                    scrollSnapAlign: 'start'
                   }}
                   onMouseEnter={() => setHoveredTeam(member.id)}
                   onMouseLeave={() => setHoveredTeam(null)}
                 >
                   <div className="mb-4 sm:mb-6">
                     {member.hasImage ? (
-                      <img 
-                        src={member.image} 
+                      <img
+                        src={member.image}
                         alt={member.name}
                         className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover mx-auto mb-4 border-2 border-white/10"
                       />
@@ -311,9 +394,9 @@ const CareersPage = () => {
                       </div>
                     )}
                   </div>
-                  
+
                   <div className="text-center">
-                    <h3 
+                    <h3
                       className="text-lg sm:text-xl font-semibold mb-2"
                       style={{
                         fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif'
@@ -322,7 +405,7 @@ const CareersPage = () => {
                       {member.name}
                     </h3>
                     <p className="text-white/60 text-xs sm:text-sm mb-2">{member.role}</p>
-                    <p 
+                    <p
                       className="text-white/80 text-xs sm:text-sm mb-4"
                       style={{
                         opacity: hoveredTeam === member.id ? 1 : 0.7,
@@ -331,9 +414,9 @@ const CareersPage = () => {
                     >
                       {member.expertise}
                     </p>
-                    
+
                     {member.linkedin && (
-                      <a 
+                      <a
                         href={member.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -351,9 +434,10 @@ const CareersPage = () => {
             </div>
           </div>
 
-          {/* Scroll Hint */}
+          {/* Hint */}
           <p className="text-center text-white/40 text-xs sm:text-sm mt-4 sm:mt-6">
-            ← Auto-scrolling • Hover to pause • Drag to explore →
+            <span className="hidden sm:inline">Swipe → to explore the team</span>
+            <span className="sm:hidden">Swipe → to explore the team</span>
           </p>
         </div>
       </section>
@@ -361,7 +445,7 @@ const CareersPage = () => {
       {/* Technology Stack Section - RESPONSIVE */}
       <section className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-4 sm:px-6 md:px-4 sm:px-6 md:px-10" style={{ zIndex: 10 }}>
         <div className="max-w-5xl mx-auto">
-          <h2 
+          <h2
             className="text-2xl sm:text-3xl md:text-4xl mb-8 sm:mb-12 text-center"
             style={{
               fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
@@ -371,17 +455,17 @@ const CareersPage = () => {
           >
             Our Technology Stack
           </h2>
-          
+
           <div className="grid sm:grid-cols-2 gap-6 sm:gap-8">
             {Object.entries(techStack).map(([category, technologies]) => (
-              <div 
+              <div
                 key={category}
                 className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 sm:p-6"
               >
                 <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-white/90">{category}</h3>
                 <div className="flex flex-wrap gap-2">
                   {technologies.map((tech) => (
-                    <span 
+                    <span
                       key={tech}
                       className="px-2.5 sm:px-3 py-1 bg-white/10 rounded-full text-xs sm:text-sm text-white/70"
                     >
@@ -398,7 +482,7 @@ const CareersPage = () => {
       {/* Our Values Section - RESPONSIVE */}
       <section className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-4 sm:px-6 md:px-4 sm:px-6 md:px-10" style={{ zIndex: 10 }}>
         <div className="max-w-5xl mx-auto">
-          <h2 
+          <h2
             className="text-2xl sm:text-3xl md:text-4xl mb-8 sm:mb-12 text-center"
             style={{
               fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
@@ -408,10 +492,10 @@ const CareersPage = () => {
           >
             Our Values
           </h2>
-          
+
           <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
             {values.map((value, index) => (
-              <div 
+              <div
                 key={index}
                 className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5 sm:p-6"
               >
@@ -426,7 +510,7 @@ const CareersPage = () => {
       {/* Send Resume CTA Section - RESPONSIVE */}
       <section className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-4 sm:px-6 md:px-4 sm:px-6 md:px-10" style={{ zIndex: 10 }}>
         <div className="max-w-4xl mx-auto text-center bg-gradient-to-br from-purple-900/30 to-cyan-900/30 backdrop-blur-sm border border-white/10 rounded-2xl sm:rounded-3xl p-8 sm:p-12">
-          <h2 
+          <h2
             className="text-2xl sm:text-3xl md:text-4xl mb-4 sm:mb-6"
             style={{
               fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
@@ -439,7 +523,7 @@ const CareersPage = () => {
           <p className="text-base sm:text-lg md:text-xl text-white/70 mb-6 sm:mb-8 px-2">
             If you're passionate about home automation, AI, and IoT, and believe in building reliable systems that work in the real world, we want to hear from you. We value curiosity, ownership, and real-world engineering.
           </p>
-          <a 
+          <a
             href="mailto:careers@inikola.com"
             className="inline-block px-6 sm:px-8 py-3 sm:py-4 bg-white text-black rounded-full hover:bg-white/90 transition-colors text-base sm:text-lg"
             style={{
