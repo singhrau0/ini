@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>iNikola — Secure Enterprise AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  :root { --ink:#0B0C0E; --g60:#65696F; --g40:#9BA0A6; --rule:rgba(11,12,14,.1); --cobalt:#1B3BE8; --canvas:#F7F7F5; }
+  body { font-family:'Inter',system-ui,sans-serif; color:var(--ink); font-size:10pt; line-height:1.55; }
+  .page { width:210mm; height:297mm; padding:18mm 16mm; position:relative; page-break-after:always; overflow:hidden; background:#fff; }
+  .page:last-child { page-break-after:auto; }
+  .dark { background:var(--ink); color:#fff; }
+  .soft { background:var(--canvas); }
+  h1,h2,h3 { font-family:'Inter Tight',sans-serif; letter-spacing:-.035em; font-weight:500; }
+  .em { font-family:'Instrument Serif',Georgia,serif; font-style:italic; font-weight:400; }
+  .eyebrow { font-family:'JetBrains Mono',monospace; font-size:7pt; letter-spacing:.16em; text-transform:uppercase; color:var(--g60); }
+  .dark .eyebrow { color:rgba(255,255,255,.45); }
+  .mark { display:flex; align-items:center; gap:7px; }
+  .mark svg { width:20px; height:20px; }
+  .mark span { font-family:'Inter Tight',sans-serif; font-weight:600; font-size:12pt; letter-spacing:-.03em; }
+  .rule { height:1px; background:var(--rule); }
+  .dark .rule { background:rgba(255,255,255,.14); }
+  .foot { position:absolute; left:16mm; right:16mm; bottom:12mm; display:flex; justify-content:space-between;
+          font-family:'JetBrains Mono',monospace; font-size:6.5pt; letter-spacing:.12em; text-transform:uppercase; color:var(--g40); }
+  .dark .foot { color:rgba(255,255,255,.32); }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:6mm; }
+  .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:5mm; }
+  .card { border:1px solid var(--rule); border-radius:9px; padding:5mm; }
+  .dark .card { border-color:rgba(255,255,255,.14); }
+  .num { font-family:'JetBrains Mono',monospace; font-size:7pt; letter-spacing:.14em; color:var(--cobalt); }
+  .k { font-family:'Inter Tight',sans-serif; font-weight:500; font-size:11pt; letter-spacing:-.025em; margin-top:3mm; }
+  .d { font-size:8.5pt; line-height:1.5; color:var(--g60); margin-top:2mm; }
+  .dark .d { color:rgba(255,255,255,.55); }
+  table { width:100%; border-collapse:collapse; font-size:8.5pt; }
+  td,th { text-align:left; padding:3mm 3mm 3mm 0; border-bottom:1px solid var(--rule); vertical-align:top; }
+  .dark td,.dark th { border-color:rgba(255,255,255,.12); }
+  th { font-family:'JetBrains Mono',monospace; font-size:6.5pt; letter-spacing:.13em; text-transform:uppercase; color:var(--g60); font-weight:400; }
+  .stack div { display:flex; gap:4mm; align-items:baseline; padding:2.6mm 0; border-bottom:1px solid var(--rule); }
+  .stack b { font-family:'Inter Tight',sans-serif; font-weight:500; font-size:9.5pt; width:52mm; flex:none; letter-spacing:-.02em; }
+  .stack i { font-style:normal; font-size:8pt; color:var(--g60); }
+  ul { list-style:none; }
+  li { position:relative; padding-left:5mm; font-size:9pt; line-height:1.5; margin-bottom:2.4mm; color:var(--g60); }
+  li::before { content:''; position:absolute; left:0; top:2.1mm; width:3px; height:3px; border-radius:9px; background:var(--cobalt); }
+  .dark li { color:rgba(255,255,255,.6); }
+  .lede { font-size:11.5pt; line-height:1.6; color:#3A3D42; }
+  .dark .lede { color:rgba(255,255,255,.65); }
+</style>
+</head>
+<body>
+
+<!-- 1 COVER -->
+<section class="page dark" style="display:flex;flex-direction:column;justify-content:space-between;">
+  <div class="mark" style="color:#fff">
+    <svg viewBox="0 0 32 32" fill="none"><path d="M16 3.4c-4.75 0-8.6 3.72-8.6 8.32 0 3.02 1.63 5.44 3.35 7.05.92.86 1.42 1.62 1.42 2.63v.55h7.66v-.55c0-1.01.5-1.77 1.42-2.63 1.72-1.61 3.35-4.03 3.35-7.05 0-4.6-3.85-8.32-8.6-8.32Z" stroke="#fff" stroke-width="1.55" stroke-linejoin="round"/><path d="M12.35 24.35h7.3M12.9 26.85h6.2M14.15 29.2h3.7" stroke="#fff" stroke-width="1.55" stroke-linecap="round"/></svg>
+    <span>iNikola</span>
+  </div>
+  <div>
+    <div class="eyebrow">Enterprise AI engineering · Secure AI enablement</div>
+    <h1 style="font-size:40pt; line-height:.98; margin-top:8mm; color:#fff;">
+      Secure enterprise AI,<br>built for <span class="em" style="color:#7C90FF">production.</span>
+    </h1>
+    <p class="lede" style="margin-top:8mm; max-width:120mm;">
+      We take enterprise AI from a blocked use-case to a security-approved
+      system in production — engineered, governed and deployed inside the
+      boundary your data is already allowed to live in.
+    </p>
+  </div>
+  <div>
+    <div class="rule" style="margin-bottom:5mm"></div>
+    <div style="display:flex; justify-content:space-between; font-size:8.5pt; color:rgba(255,255,255,.6)">
+      <span>contact@inikola.com</span><span>+91 93050 09726</span><span>Hyderabad, India</span><span>inikola.com</span>
+    </div>
+  </div>
+</section>
+
+<!-- 2 THE PROBLEM -->
+<section class="page">
+  <div class="eyebrow">01 · The real bottleneck</div>
+  <h2 style="font-size:26pt; line-height:1.05; margin-top:6mm;">AI adoption is not the hard part. <span class="em" style="color:var(--g40)">Approval is.</span></h2>
+  <p class="lede" style="margin-top:6mm; max-width:150mm;">
+    Enterprise AI projects rarely fail because a model cannot generate text.
+    They stall when the organisation has to answer where the data goes, who is
+    allowed to see what came back, and who owns the system on the day it breaks.
+  </p>
+  <div class="rule" style="margin:8mm 0"></div>
+  <table>
+    <tr><th style="width:52mm">Where projects stop</th><th>What we put in its place</th></tr>
+    <tr><td>Blocked use case</td><td>An approved data path security and legal can sign off</td></tr>
+    <tr><td>Shadow AI</td><td>One gateway under company identity, policy and audit</td></tr>
+    <tr><td>No audit trail</td><td>Per-query evidence: who asked what, of which model, over which documents</td></tr>
+    <tr><td>Permission leakage</td><td>Retrieval inheriting the permissions the source already carries</td></tr>
+    <tr><td>Model sprawl</td><td>Policy-based routing behind a single control plane</td></tr>
+    <tr><td>Stalled proof-of-concept</td><td>A production system that is owned, monitored and supported</td></tr>
+  </table>
+  <div class="card" style="margin-top:9mm; background:var(--canvas); border:none;">
+    <p style="font-family:'Inter Tight'; font-size:13pt; letter-spacing:-.03em; line-height:1.35;">
+      The enterprise conversation has moved from <span class="em">“can AI work?”</span> to <span class="em">“can AI be approved?”</span>
+      That layer — identity, permissions, integration, governance and production ownership — is what we build.
+    </p>
+  </div>
+  <div class="foot"><span>iNikola · Secure Enterprise AI</span><span>02</span></div>
+</section>
+
+<!-- 3 WHAT WE DO -->
+<section class="page">
+  <div class="eyebrow">02 · What we do</div>
+  <h2 style="font-size:26pt; line-height:1.05; margin-top:6mm;">End to end, and <span class="em" style="color:var(--g40)">secure at every step.</span></h2>
+  <div class="grid2" style="margin-top:8mm;">
+    <div class="card"><div class="num">01</div><div class="k">AI Strategy &amp; Readiness</div><div class="d">Use-case discovery, data sensitivity mapping, architecture options, ROI and the approval plan.</div></div>
+    <div class="card"><div class="num">02</div><div class="k">Enterprise AI Engineering</div><div class="d">GenAI applications, ML systems, RAG, multimodal AI, copilots, APIs and integration.</div></div>
+    <div class="card"><div class="num">03</div><div class="k">Agentic AI &amp; Automation</div><div class="d">Tool-using agents, workflow automation, multi-agent patterns and human approval loops.</div></div>
+    <div class="card"><div class="num">04</div><div class="k">Private &amp; Secure AI</div><div class="d">Secure AI gateway, SSO and RBAC, DLP, controlled egress, model routing and audit.</div></div>
+    <div class="card"><div class="num">05</div><div class="k">AI Security Engineering</div><div class="d">Threat modelling, prompt-injection defence, tool and MCP security, red-teaming, release control.</div></div>
+    <div class="card"><div class="num">06</div><div class="k">Enterprise Knowledge &amp; RAG</div><div class="d">Permission-aware retrieval, vector and hybrid search, citations, document intelligence.</div></div>
+    <div class="card"><div class="num">07</div><div class="k">AI Governance &amp; Quality</div><div class="d">Evaluation sets, guardrails, risk testing, human-in-the-loop and auditability.</div></div>
+    <div class="card"><div class="num">08</div><div class="k">LLMOps &amp; Managed AI</div><div class="d">Monitoring, continuous evaluation, model updates, cost tracking and incident support.</div></div>
+  </div>
+  <div class="foot"><span>iNikola · Secure Enterprise AI</span><span>03</span></div>
+</section>
+
+<!-- 4 ARCHITECTURE -->
+<section class="page soft">
+  <div class="eyebrow">03 · Reference architecture</div>
+  <h2 style="font-size:26pt; line-height:1.05; margin-top:6mm;">The secure AI <span class="em" style="color:var(--cobalt)">control plane.</span></h2>
+  <p class="lede" style="margin-top:5mm; max-width:150mm;">
+    We separate enterprise control from the model deliberately. The model will
+    change — probably several times. Your identity, policy, permission and audit
+    requirements will not.
+  </p>
+  <div class="stack" style="margin-top:8mm;">
+    <div><b>Enterprise users</b><i>Employees, teams and applications</i></div>
+    <div><b>Identity &amp; access</b><i>SSO · MFA · RBAC / ABAC · source permissions</i></div>
+    <div><b>iNikola secure AI gateway</b><i>Policy enforcement · routing · isolation · egress control</i></div>
+    <div><b>Data &amp; safety controls</b><i>DLP and PII controls · prompt and response policy · audit logs</i></div>
+    <div><b>Permission-aware RAG &amp; agents</b><i>Retrieval honouring source ACLs · tools · orchestration</i></div>
+    <div><b>Enterprise data sources</b><i>SharePoint · files · databases · APIs · tickets · code · SOPs</i></div>
+    <div><b>Model abstraction layer</b><i>Local SLM · open-weight LLM · VPC model · approved enterprise API</i></div>
+    <div><b>Evaluation &amp; observability</b><i>Quality · security tests · cost · latency · risk · usage</i></div>
+  </div>
+  <div class="card" style="margin-top:8mm; background:#fff;">
+    <p style="font-size:10pt; line-height:1.55;">
+      <b style="font-weight:600">The model becomes replaceable.</b>
+      <span style="color:var(--g60)">Governance, integration, permissions and security become the part that compounds — which is why the second use case costs a fraction of the first.</span>
+    </p>
+  </div>
+  <div class="foot"><span>iNikola · Secure Enterprise AI</span><span>04</span></div>
+</section>
+
+<!-- 5 DEPLOYMENT -->
+<section class="page dark">
+  <div class="eyebrow">04 · Deployment</div>
+  <h2 style="font-size:26pt; line-height:1.05; margin-top:6mm; color:#fff;">Private does not <span class="em" style="color:rgba(255,255,255,.45)">have to mean on-premise.</span></h2>
+  <p class="lede" style="margin-top:5mm; max-width:150mm;">
+    We use the minimum architecture your risk profile actually requires — then
+    design so the boundary can move later without rebuilding the application.
+  </p>
+  <table style="margin-top:8mm; color:#fff;">
+    <tr><th style="width:44mm">Boundary</th><th style="width:58mm">Fits when</th><th>Our role</th></tr>
+    <tr><td>Approved enterprise API</td><td style="color:rgba(255,255,255,.55)">Enterprise terms already cover the data class</td><td style="color:rgba(255,255,255,.75)">Application, access model, data-flow controls, evaluation, governance</td></tr>
+    <tr><td>Customer VPC / private endpoint</td><td style="color:rgba(255,255,255,.55)">Cloud-first estate needing private connectivity</td><td style="color:rgba(255,255,255,.75)">Secure architecture, routing, retrieval, IAM, observability</td></tr>
+    <tr><td>Private cloud / on-premise</td><td style="color:rgba(255,255,255,.55)">Regulation or genuinely sensitive IP requires it</td><td style="color:rgba(255,255,255,.75)">Private inference stack, integrations, governance, operations</td></tr>
+    <tr><td>Disconnected / air-gapped</td><td style="color:rgba(255,255,255,.55)">No external egress permitted at all</td><td style="color:rgba(255,255,255,.75)">Local model, retrieval and tooling with isolated controls</td></tr>
+    <tr><td>Hybrid / policy router</td><td style="color:rgba(255,255,255,.55)">Different data classes need different answers</td><td style="color:rgba(255,255,255,.75)">Policy routing behind one gateway, with one audit trail</td></tr>
+  </table>
+  <div class="foot"><span>iNikola · Secure Enterprise AI</span><span>05</span></div>
+</section>
+
+<!-- 6 FLAGSHIP -->
+<section class="page">
+  <div class="eyebrow">05 · Flagship solution</div>
+  <h2 style="font-size:26pt; line-height:1.05; margin-top:6mm;">Private Knowledge Copilot</h2>
+  <p class="lede" style="margin-top:5mm; max-width:150mm;">
+    A secure assistant over your own documents, deployed inside your boundary.
+    The fastest route to a governed AI system in production — and a reusable
+    control plane the next five use cases build on.
+  </p>
+  <div class="grid2" style="margin-top:8mm;">
+    <div>
+      <div class="eyebrow">Controls</div>
+      <ul style="margin-top:4mm">
+        <li>Permission-aware retrieval inheriting source access control</li>
+        <li>Citations on every answer, back to the originating document</li>
+        <li>SSO, MFA and RBAC through your existing identity provider</li>
+        <li>DLP and policy controls on prompts and responses</li>
+        <li>Complete audit trail per user, per query, per document</li>
+        <li>Model-agnostic: local SLM, open-weight, VPC or approved API</li>
+      </ul>
+    </div>
+    <div>
+      <div class="eyebrow">By vertical</div>
+      <table style="margin-top:2mm">
+        <tr><td style="width:34mm">NBFC / lending</td><td style="color:var(--g60)">Credit &amp; policy copilot</td></tr>
+        <tr><td>Wealth / AMC / PMS</td><td style="color:var(--g60)">Compliance &amp; research copilot</td></tr>
+        <tr><td>Insurance / TPA</td><td style="color:var(--g60)">Claims &amp; policy copilot</td></tr>
+        <tr><td>GCC</td><td style="color:var(--g60)">Engineering knowledge copilot</td></tr>
+        <tr><td>Pharma</td><td style="color:var(--g60)">Quality &amp; SOP copilot</td></tr>
+        <tr><td>BPO / KPO</td><td style="color:var(--g60)">Client-isolated delivery copilot</td></tr>
+        <tr><td>Manufacturing</td><td style="color:var(--g60)">Engineering troubleshooting copilot</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="rule" style="margin:9mm 0 7mm"></div>
+  <div class="eyebrow">Products &amp; accelerators — available today</div>
+  <div class="grid3" style="margin-top:5mm;">
+    <div class="card"><div class="k" style="margin:0">Posting Expert</div><div class="d">AI marketing and social publishing run as an automated agentic workflow.</div></div>
+    <div class="card"><div class="k" style="margin:0">EvalSea</div><div class="d">Evaluation, assessment and verification workflows, automated end to end.</div></div>
+    <div class="card"><div class="k" style="margin:0">HR Bot</div><div class="d">Screening, interview and hiring workflow automation with human checkpoints.</div></div>
+  </div>
+  <div class="foot"><span>iNikola · Secure Enterprise AI</span><span>06</span></div>
+</section>
+
+<!-- 7 ENGAGEMENT -->
+<section class="page soft">
+  <div class="eyebrow">06 · How we engage</div>
+  <h2 style="font-size:26pt; line-height:1.05; margin-top:6mm;">One workflow. One security review. <span class="em" style="color:var(--g40)">Four weeks.</span></h2>
+  <div class="grid2" style="margin-top:8mm;">
+    <div class="card" style="background:#fff"><div class="num">Week 1</div><div class="k">Use-case discovery</div><div class="d">Workflow, data sensitivity, ROI owner, approval blockers, success criteria.</div></div>
+    <div class="card" style="background:#fff"><div class="num">Week 2</div><div class="k">Architecture &amp; risk plan</div><div class="d">Boundary, access, egress, model choice, data flow, TCO, control matrix.</div></div>
+    <div class="card" style="background:#fff"><div class="num">Week 3</div><div class="k">Private pilot build</div><div class="d">Retrieval or agent, authentication, guardrails, logging, integration, evaluation.</div></div>
+    <div class="card" style="background:#fff"><div class="num">Week 4</div><div class="k">Security review &amp; handoff</div><div class="d">Demo, control evidence, test results, business KPI, rollout plan.</div></div>
+  </div>
+  <div class="rule" style="margin:9mm 0 6mm"></div>
+  <div class="eyebrow">Commercial ladder</div>
+  <table style="margin-top:4mm">
+    <tr><th style="width:38mm">Stage</th><th style="width:62mm">Offer</th><th>What it is</th></tr>
+    <tr><td>Discovery</td><td>AI Approval &amp; Architecture Review</td><td style="color:var(--g60)">30 minutes on one blocked workflow. No charge.</td></tr>
+    <tr><td>Assessment</td><td>Readiness &amp; Security Assessment</td><td style="color:var(--g60)">Paid engagement producing architecture and approval plan.</td></tr>
+    <tr><td>Pilot</td><td>Fixed-scope Secure AI Pilot</td><td style="color:var(--g60)">One workflow, real data, controlled users, measurable criteria.</td></tr>
+    <tr><td>Production</td><td>Departmental Deployment</td><td style="color:var(--g60)">Rollout, integrations, hardening, security sign-off.</td></tr>
+    <tr><td>Platform</td><td>Multi-use-case AI Platform</td><td style="color:var(--g60)">Shared control plane across business units.</td></tr>
+    <tr><td>Operate</td><td>Managed AI Operations</td><td style="color:var(--g60)">Monitoring, evaluations, updates, incident support.</td></tr>
+  </table>
+  <p style="margin-top:6mm; font-size:8.5pt; color:var(--g60); max-width:150mm;">
+    Infrastructure and third-party licences are procured in your own accounts on
+    your own commercial terms. We charge for architecture, implementation,
+    controls, integration and operations — never for hardware resale. You own the
+    code, the infrastructure and the documentation.
+  </p>
+  <div class="foot"><span>iNikola · Secure Enterprise AI</span><span>07</span></div>
+</section>
+
+<!-- 8 CLOSE -->
+<section class="page dark" style="display:flex;flex-direction:column;justify-content:space-between;">
+  <div>
+    <div class="eyebrow">07 · Where we work</div>
+    <div class="grid2" style="margin-top:6mm;">
+      <ul>
+        <li>NBFC &amp; digital lending</li>
+        <li>Wealth, AMC, PMS &amp; AIF</li>
+        <li>Insurance &amp; TPAs</li>
+        <li>Global capability centres</li>
+      </ul>
+      <ul>
+        <li>Payments &amp; fintech infrastructure</li>
+        <li>Pharma, biotech &amp; CRO</li>
+        <li>IT services, BPM &amp; KPO</li>
+        <li>Manufacturing &amp; engineering</li>
+      </ul>
+    </div>
+  </div>
+  <div>
+    <h2 style="font-size:30pt; line-height:1.05; color:#fff; max-width:150mm;">
+      Which AI workflow does your business want that <span class="em" style="color:#7C90FF">security has not approved?</span>
+    </h2>
+    <p class="lede" style="margin-top:6mm; max-width:145mm;">
+      Bring us that one. In thirty minutes we will map the data path, name the
+      blockers, and tell you the architecture that clears them — or tell you it
+      is already fine as it stands.
+    </p>
+  </div>
+  <div>
+    <div class="rule" style="margin-bottom:5mm"></div>
+    <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+      <div>
+        <div style="font-size:11pt; color:#fff;">contact@inikola.com</div>
+        <div style="font-size:9pt; color:rgba(255,255,255,.55); margin-top:2mm;">+91 93050 09726 · Hyderabad, Telangana, India</div>
+      </div>
+      <div class="mark" style="color:#fff">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M16 3.4c-4.75 0-8.6 3.72-8.6 8.32 0 3.02 1.63 5.44 3.35 7.05.92.86 1.42 1.62 1.42 2.63v.55h7.66v-.55c0-1.01.5-1.77 1.42-2.63 1.72-1.61 3.35-4.03 3.35-7.05 0-4.6-3.85-8.32-8.6-8.32Z" stroke="#fff" stroke-width="1.55" stroke-linejoin="round"/><path d="M12.35 24.35h7.3M12.9 26.85h6.2M14.15 29.2h3.7" stroke="#fff" stroke-width="1.55" stroke-linecap="round"/></svg>
+        <span>iNikola</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

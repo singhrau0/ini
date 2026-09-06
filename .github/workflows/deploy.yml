@@ -1,36 +1,52 @@
-name: Deploy Build Files to S3
+name: Build and deploy to S3
 
 on:
   push:
-    branches:
-      - main  # Triggers the workflow on pushes to the main branch
+    branches: [main]
+  workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Set up Node.js (if using Node.js-based build tools)
-        uses: actions/setup-node@v3
+      - name: Set up Node
+        uses: actions/setup-node@v4
         with:
-          node-version: 18  # Specify the appropriate Node.js version
+          node-version: 20
+          cache: npm
 
-      - name: Install Dependencies
-        run: npm install
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Build the Project
+      - name: Build
+        env:
+          # Where every website form submission is delivered.
+          # Add the secret in Settings → Secrets and variables → Actions.
+          VITE_LEAD_ENDPOINT: ${{ secrets.VITE_LEAD_ENDPOINT }}
+          VITE_BOOKING_URL: ${{ secrets.VITE_BOOKING_URL }}
         run: npm run build
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-south-1  # Replace with the AWS region of your S3 bucket
+          aws-region: ap-south-1
 
-      - name: Deploy Build Files to S3
+      # Fingerprinted assets never change under the same name — cache them hard.
+      - name: Upload hashed assets
         run: |
-          aws s3 sync ./dist s3://inikola-website --delete
+          aws s3 sync ./dist s3://inikola-website \
+            --exclude "*" --include "assets/*" \
+            --cache-control "public, max-age=31536000, immutable"
+
+      # Everything else (HTML, sitemap, robots, images, PDFs) must revalidate,
+      # otherwise a deploy can leave stale HTML pointing at deleted bundles.
+      - name: Upload everything else
+        run: |
+          aws s3 sync ./dist s3://inikola-website --delete \
+            --exclude "assets/*" \
+            --cache-control "public, max-age=0, must-revalidate"

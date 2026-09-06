@@ -1,107 +1,66 @@
-import Header from './components/Header';
-import Robot from './components/Robot';
-import SectionVideo from './components/SectionVideo';
-import HeroSection from './components/HeroSection';
-import Section3 from './components/Section3';
-import Section4 from './components/Section4';
-import Section5 from './components/Section5';
-import ExperienceSection from './components/ExperienceSection';
-import FAQSection from './components/FAQSection';
-import Footer from './components/Footer';
-import { useSmoothScroll } from './hooks/useSmoothScroll';
-import { useScrollAnimations } from './hooks/useScrollAnimations';
-import { VIDEOS } from './config/videos';
-function App() {
-  // Initialize smooth scrolling
-  useSmoothScroll();
-  
-  // Initialize scroll animations
-  useScrollAnimations();
+import { Suspense, lazy } from 'react'
+import { Routes, Route } from 'react-router-dom'
+import Layout from './components/layout/Layout'
+import Home from './pages/Home'
+import { useSmoothScroll } from './hooks/useSmoothScroll'
+
+const Solutions = lazy(() => import('./pages/Solutions'))
+const SolutionDetail = lazy(() => import('./pages/SolutionDetail'))
+const Products = lazy(() => import('./pages/Products'))
+const ProductDetail = lazy(() => import('./pages/ProductDetail'))
+const RnD = lazy(() => import('./pages/RnD'))
+const Portfolio = lazy(() => import('./pages/Portfolio'))
+const PortfolioDetail = lazy(() => import('./pages/PortfolioDetail'))
+const Team = lazy(() => import('./pages/Team'))
+const About = lazy(() => import('./pages/About'))
+const Faq = lazy(() => import('./pages/Faq'))
+const Insights = lazy(() => import('./pages/Insights'))
+const InsightDetail = lazy(() => import('./pages/InsightDetail'))
+const Contact = lazy(() => import('./pages/Contact'))
+const Book = lazy(() => import('./pages/Book'))
+const Careers = lazy(() => import('./pages/Careers'))
+const Landing = lazy(() => import('./pages/Landing'))
+const Legal = lazy(() => import('./pages/Legal'))
+const NotFound = lazy(() => import('./pages/NotFound'))
+
+const Loading = () => (
+  <div className="flex min-h-[70vh] items-center justify-center">
+    <div className="h-5 w-5 animate-spin rounded-full border-2 border-ink/15 border-t-ink/60" />
+  </div>
+)
+
+export default function App() {
+  useSmoothScroll()
 
   return (
-    <div className="min-h-screen bg-black text-white font-sans">
-      {/* Robot - z-index 9999 - MUST BE VISIBLE */}
-      <Robot />
+    <Suspense fallback={<Loading />}>
+      <Routes>
+        {/* Unlisted paid-campaign landing page — outside the main layout,
+            no navigation, no footer links, noindex. */}
+        <Route path="/lp/private-ai" element={<Landing />} />
 
-      {/* Header - z-index 100 */}
-      <Header />
-
-      {/* HERO SECTION - MAXIMUM BRIGHTNESS */}
-      <section id="hero" className="relative min-h-screen" style={{ zIndex: 1 }}>
-        <SectionVideo videoSrc={VIDEOS.heroBackground} brightness={0.5} />
-        <main className="relative" style={{ zIndex: 10 }}>
-          <HeroSection />
-          <div id="section-hero-end" className="h-[1px]"></div>
-        </main>
-      </section>
-
-      {/* SECTION 3 - MAXIMUM BRIGHTNESS */}
-      <section id="content-3" className="relative" style={{ zIndex: 1 }}>
-        <SectionVideo 
-          videoSrc={VIDEOS.whatInikola}  // ← Changed!
-          brightness={0.5}
-        />
-        <main className="relative" style={{ zIndex: 10 }}>
-          <Section3 />
-        </main>
-      </section>
-
-      {/* SECTION 4 - MAXIMUM BRIGHTNESS */}
-      <section id="content-4" className="relative" style={{ zIndex: 1 }}>
-        <SectionVideo 
-          videoSrc={VIDEOS.whyInikola}  // ← Changed!
-          brightness={0.5}
-        />
-        <main className="relative" style={{ zIndex: 10 }}>
-          <Section4 />
-        </main>
-      </section>
-
-      {/* SECTION 5 - MAXIMUM BRIGHTNESS */}
-      <section id="content-5" className="relative" style={{ zIndex: 1 }}>
-        <SectionVideo 
-          videoSrc={VIDEOS.house}  // ← Changed!
-          brightness={0.5}
-        />
-        <main className="relative" style={{ zIndex: 10 }}>
-          <Section5 />
-        </main>
-      </section>
-
-      {/* EXPERIENCE SECTION - MAXIMUM BRIGHTNESS */}
-      <section id="content-experience" className="relative" style={{ zIndex: 1 }}>
-        <SectionVideo 
-          videoSrc={VIDEOS.heroBackground}  // ← Changed!
-          brightness={0.5}
-        />
-        <main className="relative" style={{ zIndex: 10 }}>
-          <ExperienceSection />
-        </main>
-      </section>
-
-      {/* FAQ SECTION - MAXIMUM BRIGHTNESS */}
-      <section id="content-faq" className="relative" style={{ zIndex: 1 }}>
-        <SectionVideo 
-          videoSrc={VIDEOS.house}  // ← Changed!
-          brightness={0.5}
-        />
-        <main className="relative" style={{ zIndex: 10 }}>
-          <FAQSection />
-        </main>
-      </section>
-
-      {/* FOOTER - MAXIMUM BRIGHTNESS */}
-      <footer className="relative" style={{ zIndex: 1 }}>
-        <SectionVideo 
-          videoSrc={VIDEOS.footer}  // ← Changed!
-          brightness={0.5}
-        />
-        <div className="relative" style={{ zIndex: 10 }}>
-          <Footer />
-        </div>
-      </footer>
-    </div>
-  );
+        <Route element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="solutions" element={<Solutions />} />
+          <Route path="solutions/:slug" element={<SolutionDetail />} />
+          <Route path="products" element={<Products />} />
+          <Route path="products/:slug" element={<ProductDetail />} />
+          <Route path="rnd" element={<RnD />} />
+          <Route path="portfolio" element={<Portfolio />} />
+          <Route path="portfolio/:slug" element={<PortfolioDetail />} />
+          <Route path="team" element={<Team />} />
+          <Route path="about" element={<About />} />
+          <Route path="faq" element={<Faq />} />
+          <Route path="insights" element={<Insights />} />
+          <Route path="insights/:slug" element={<InsightDetail />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="book" element={<Book />} />
+          <Route path="careers" element={<Careers />} />
+          <Route path="privacy" element={<Legal kind="privacy" />} />
+          <Route path="terms" element={<Legal kind="terms" />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </Suspense>
+  )
 }
-
-export default App;

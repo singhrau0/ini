@@ -1,212 +1,154 @@
-# INIKOLA Website
+# iNikola — website
 
-A modern, parallax-scrolling website for INIKOLA's intelligent home automation system built with React, GSAP, and Tailwind CSS.
+Corporate site for **iNikola**, repositioned from home automation to
+**Enterprise AI Engineering + Secure AI Enablement**.
 
-## 🚀 Features
-
-- Smooth parallax scrolling with Lenis
-- Animated robot guide using Spline 3D
-- Dynamic background transitions
-- GSAP scroll-triggered animations
-- Fully responsive design
-- Modern, minimalist UI inspired by josh.ai
-
-## 📁 Project Structure
-
-```
-inikola-website/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   ├── Header.jsx              # Navigation header (disappears on scroll)
-│   │   ├── Robot.jsx               # 3D Robot component (Spline embed)
-│   │   ├── BackgroundManager.jsx   # Manages parallax backgrounds
-│   │   ├── HeroSection.jsx         # Landing section
-│   │   ├── Section2.jsx            # The Invisible Intelligence
-│   │   ├── Section3.jsx            # Smart Lighting
-│   │   ├── Section4.jsx            # Climate Control
-│   │   ├── Section5.jsx            # Security
-│   │   ├── Section6.jsx            # Connected Ecosystem
-│   │   ├── Section7.jsx            # Privacy
-│   │   ├── Section8.jsx            # Experience INIKOLA (CTA)
-│   │   └── Footer.jsx              # Footer section
-│   ├── hooks/
-│   │   ├── useScrollAnimations.js  # GSAP scroll animations
-│   │   └── useSmoothScroll.js      # Lenis smooth scrolling
-│   ├── styles/
-│   │   └── index.css               # Global styles + Tailwind
-│   ├── App.jsx                     # Main app component
-│   └── main.jsx                    # Entry point
-├── .gitignore
-├── package.json
-├── vite.config.js
-├── tailwind.config.js
-├── postcss.config.js
-└── README.md
-```
-
-## 🛠️ Installation & Setup
-
-### 1. Create Project Directory
-
-```bash
-mkdir inikola-website
-cd inikola-website
-```
-
-### 2. Copy All Files
-
-Copy all the provided files into your project directory following the structure above.
-
-### 3. Install Dependencies
+React 18 · Vite 5 · Tailwind 3 · Framer Motion · React Router 7 — deployed as a
+static bundle to S3.
 
 ```bash
 npm install
-```
-
-This will install:
-- React & React DOM
-- GSAP (for animations)
-- Lenis (for smooth scrolling)
-- Vite (build tool)
-- Tailwind CSS (styling)
-- And all dev dependencies
-
-### 4. Run Development Server
-
-```bash
-npm run dev
-```
-
-The site will be available at `http://localhost:3000`
-
-### 5. Build for Production
-
-```bash
-npm run build
-```
-
-This creates an optimized production build in the `dist/` folder.
-
-### 6. Preview Production Build
-
-```bash
+npm run dev      # http://localhost:3000
+npm run build    # → dist/ (bundle + per-route HTML + sitemap + robots)
 npm run preview
 ```
 
-## 🎨 Customization
+---
 
-### Change Robot
+## Before you go live — the three things that need your input
 
-Edit `src/components/Robot.jsx` and replace the Spline URL:
+Everything else works out of the box. These need a value only you have.
 
-```jsx
-<iframe
-  src="YOUR_SPLINE_URL_HERE"
-  // ... rest of props
-/>
+### 1. Where leads go  → `VITE_LEAD_ENDPOINT`
+
+Every form on the site (Contact, Book a demo, the ad landing page) posts JSON to
+one URL. Set it in `.env` and rebuild:
+
+```
+VITE_LEAD_ENDPOINT=https://…
 ```
 
-### Update Backgrounds
+Any of these work — pick whichever your sales team already uses:
 
-Edit `src/components/BackgroundManager.jsx` to change background images:
+| Option | What to paste |
+| --- | --- |
+| **Google Sheets** (free, ~3 min) | Deploy `scripts/lead-endpoint.gs` as an Apps Script web app and paste its `/exec` URL. Setup steps are in the file. Writes every lead to a sheet and emails the team. |
+| Formspree | `https://formspree.io/f/xxxxxxx` |
+| Web3Forms | `https://api.web3forms.com/submit` |
+| Zapier / Make | A catch-hook URL that writes into your CRM |
+| Your own CRM | Any endpoint accepting a JSON POST |
 
-```javascript
-const backgrounds = [
-  {
-    id: 1,
-    type: 'gradient',
-    style: { backgroundImage: 'YOUR_GRADIENT' }
-  },
-  {
-    id: 2,
-    type: 'image',
-    url: 'YOUR_IMAGE_URL'
-  },
-  // ...
-];
-```
+Each submission carries `name, email, company, role, phone, companySize,
+interest, message` plus `submittedAt`, `source` (which form), `page`,
+`referrer` and all `utm_*` / `gclid` / `fbclid` parameters, so campaign
+attribution works automatically.
 
-### Modify Content
+**Without this set the forms still work** — the lead is stored in the visitor's
+browser and their mail client opens pre-filled to `contact@inikola.com`. Nothing
+is lost, but it is a worse experience. Set the variable.
 
-Each section has its own component in `src/components/`. Edit the relevant section file to update content.
+### 2. Demo scheduling  → `VITE_BOOKING_URL` (optional)
 
-### Adjust Animations
+Paste a Cal.com or Calendly link and `/book` embeds the live scheduler. Leave it
+blank and `/book` shows a request form instead — which also works.
 
-Edit `src/hooks/useScrollAnimations.js` to modify:
-- Robot movement timing
-- Scroll trigger points
-- Animation durations
-- Easing functions
+### 3. Testimonials
 
-### Change Colors
-
-Update `tailwind.config.js`:
-
-```javascript
-colors: {
-  inikola: {
-    purple: '#8B7FD5',  // Your purple
-    cyan: '#00D9FF',    // Your cyan
-  }
-}
-```
-
-## 📦 Key Dependencies
-
-- **React 18.2.0** - UI library
-- **GSAP 3.12.5** - Animation library
-- **Lenis 1.0.42** - Smooth scrolling
-- **Tailwind CSS 3.4.0** - Utility-first CSS
-- **Vite 5.0.8** - Fast build tool
-
-## 🎯 Performance Tips
-
-1. **Optimize Images**: Use WebP format and compress images
-2. **Lazy Load**: Robot and backgrounds load progressively
-3. **GPU Acceleration**: All animations use `transform3d`
-4. **Code Splitting**: Vite automatically splits code
-5. **Preload Fonts**: Fonts are preloaded in index.html
-
-## 🐛 Troubleshooting
-
-### Header not disappearing on scroll
-Check that the scroll event listener in `Header.jsx` is working. Open DevTools and check for console errors.
-
-### Robot not moving
-Verify GSAP ScrollTrigger is imported and registered in `useScrollAnimations.js`.
-
-### Spline watermark showing
-The free Spline plan shows watermarks. Upgrade to Pro or use the React Three Fiber alternative (see prompt document).
-
-### Animations are janky
-- Reduce scroll scrub value in animations (lower = smoother)
-- Check GPU usage in DevTools Performance tab
-- Simplify background images (use smaller sizes)
-
-## 📱 Browser Support
-
-- Chrome/Edge 90+
-- Firefox 88+
-- Safari 14+
-- Mobile Safari 14+
-- Chrome Android 90+
-
-## 📄 License
-
-© 2025 INIKOLA. All rights reserved.
-
-## 🤝 Contributing
-
-This is a private project for INIKOLA. For questions or contributions, contact the development team.
-
-## 📞 Support
-
-For technical support or questions:
-- Email: dev@inikola.com
-- Documentation: [Internal Wiki]
+`src/data/testimonials.js` is **empty on purpose**. The section is built and
+styled but hidden. Add real, written-approval client quotes there, then set
+`features.testimonials: true` in `src/data/site.js`. Do not ship invented
+quotes — a fabricated testimonial is the fastest way to lose an enterprise deal.
 
 ---
 
-Built with ❤️ by the INIKOLA Team
+## Content — where to edit what
+
+All copy lives in plain data files. You will rarely need to touch a component.
+
+| File | Controls |
+| --- | --- |
+| `src/data/site.js` | Company details, email, phone, nav, footer, feature flags |
+| `src/data/solutions.js` | The 8 service pillars, control plane, deployment modes, pilot plan, commercial ladder |
+| `src/data/products.js` | **Products — available today only** |
+| `src/data/rnd.js` | **R&D — in development only** |
+| `src/data/portfolio.js` | Shipped work and reference architectures |
+| `src/data/team.js` | People, values, capabilities, open roles |
+| `src/data/faq.js` | FAQ (rendered with FAQPage schema) |
+| `src/data/insights.js` | Long-form articles |
+| `src/data/industries.js` | Sector list |
+| `src/data/routes.js` | Per-route title/description — **add new routes here** so they get meta tags and a sitemap entry |
+
+### The Products / R&D rule
+
+Anything a client can buy or deploy **today** lives in `products.js`. Anything
+still being built lives in `rnd.js`. They are never rendered in the same listing,
+and the R&D page states in-development status on every card. Keep it that way —
+it is the single content rule with no exceptions.
+
+---
+
+## SEO
+
+- `npm run build` writes a static HTML file per route with real `<title>`,
+  description, canonical and Open Graph tags, so crawlers and link unfurlers get
+  correct metadata without executing JavaScript.
+- `sitemap.xml` and `robots.txt` are generated from `src/data/routes.js`.
+- Structured data: Organization, FAQPage, Article, Service, SoftwareApplication
+  and BreadcrumbList.
+- `dist/404.html` and `dist/_redirects` are emitted for SPA fallback.
+
+**S3 setup:** in bucket properties → Static website hosting, set both the index
+document and the **error document** to `index.html`. Without the error document,
+deep links like `/solutions/private-secure-ai` return 403 on refresh. If the site
+sits behind CloudFront, add a custom error response mapping 403 and 404 to
+`/index.html` with response code 200.
+
+---
+
+## The unlisted ad-campaign landing page
+
+`/lp/private-ai` — built for paid campaigns:
+
+- not in the navigation, the footer, or `sitemap.xml`
+- `noindex, nofollow` in both the app and the prerendered HTML, and disallowed in
+  `robots.txt`
+- leads route to the same endpoint as everything else, tagged
+  `ad-landing-private-ai` plus whatever UTM parameters brought the visitor in
+
+Point ads at `https://inikola.com/lp/private-ai?utm_source=…&utm_campaign=…`.
+
+---
+
+## Brand assets
+
+`node scripts/build-assets.mjs` regenerates, from the HTML sources in
+`scripts/assets/`:
+
+- `public/brochures/iNikola_Enterprise_AI_Brochure.pdf` — the 8-page company
+  brochure behind the nav Brochure button
+- `public/og-cover.png` — link-preview image
+- `public/apple-touch-icon.png`
+
+Edit the HTML, re-run, commit the output. Requires Google Chrome installed.
+
+---
+
+## Performance notes
+
+- **No background video anywhere.** The hero is a bespoke canvas animation
+  (~6 KB of code, no network request) that pauses off-screen and when the tab is
+  hidden, and renders a single static frame under `prefers-reduced-motion`. There
+  is no black-screen failure mode because there is nothing to fail to load.
+- Every route below the homepage is code-split and lazily loaded.
+- Images are lazy-loaded below the fold and served at sensible sizes.
+- Smooth scrolling is loaded lazily and skipped entirely on touch devices and
+  for reduced-motion visitors.
+
+---
+
+## Deployment
+
+`.github/workflows/` builds on push to `main` and syncs `dist/` to S3.
+`node_modules/` and `dist/` are no longer committed — CI installs and builds
+them. If you previously cloned this repo, run `rm -rf node_modules && npm install`
+once; the old tree contained Windows binaries that break macOS and Linux builds.
